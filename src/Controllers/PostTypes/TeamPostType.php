@@ -25,7 +25,7 @@ class TeamPostType {
             'menu_position' => 21,
             'menu_icon' => 'dashicons-groups',
             'rewrite' => ['slug' => 'teams'],
-            'supports' => ['title', 'editor'],
+            'supports' => [],
             'show_in_rest' => true,
         ];
 

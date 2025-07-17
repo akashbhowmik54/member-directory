@@ -6,6 +6,7 @@ use MemberDirectory\Controllers\PostTypes\TeamPostType;
 use MemberDirectory\MetaBoxes\MemberMetaBox;
 use MemberDirectory\MetaBoxes\TeamMetaBox;
 use MemberDirectory\Admin\AdminAssets;
+use MemberDirectory\Core\Hooks;
 
 class Plugin {
     public static function init(): void {
@@ -21,6 +22,9 @@ class Plugin {
 
         // Register Assets
         (new AdminAssets())->register();
+
+        // Register Hooks
+        (new Hooks())->register();
     }
 
     private static function load_dependencies(): void {

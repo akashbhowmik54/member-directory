@@ -67,5 +67,16 @@ class MemberMetaBox implements MetaBoxInterface {
                 update_post_meta($post_id, "_member_$field", sanitize_text_field($_POST["member_$field"]));
             }
         }
+
+        remove_action('save_post_member', [$this, 'save_meta_boxes']);
+
+        if (!empty($_POST['member_first_name'])) {
+            wp_update_post([
+                'ID' => $post_id,
+                'post_title' => sanitize_text_field($_POST['member_first_name']),
+            ]);
+        }
+
+        remove_action('save_post_member', [$this, 'save_meta_boxes']);
     }
 }

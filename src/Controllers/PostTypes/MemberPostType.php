@@ -25,7 +25,7 @@ class MemberPostType {
             'menu_position' => 20,
             'menu_icon' => 'dashicons-id',
             'rewrite' => ['slug' => 'members'],
-            'supports' => ['title', 'editor', 'thumbnail'],
+            'supports' => [],
             'show_in_rest' => true,
         ];
 
