@@ -3,6 +3,8 @@ namespace MemberDirectory\Core;
 
 use MemberDirectory\Controllers\PostTypes\MemberPostType;
 use MemberDirectory\Controllers\PostTypes\TeamPostType;
+use MemberDirectory\MetaBoxes\MemberMetaBox;
+use MemberDirectory\Admin\AdminAssets;
 
 class Plugin {
     public static function init(): void {
@@ -11,6 +13,12 @@ class Plugin {
         // Register CPTs
         (new MemberPostType())->register();
         (new TeamPostType())->register();
+
+        // Register Metaboxes
+        (new MemberMetaBox())->register();
+
+        // Register Assets
+        (new AdminAssets())->register();
     }
 
     private static function load_dependencies(): void {
