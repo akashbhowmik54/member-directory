@@ -1,0 +1,13 @@
+{
+    "name": "akashbhowmik54/member-directory",
+    "description": "Custom WordPress Member Directory Plugin",
+    "type": "wordpress-plugin",
+    "license": "GPL-2.0-or-later",
+    "autoload": {
+        "psr-4": {
+            "MemberDirectory\\": "src/"
+        }
+    },
+    "minimum-stability": "stable",
+    "require": {}
+}
