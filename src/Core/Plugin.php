@@ -4,6 +4,7 @@ namespace MemberDirectory\Core;
 use MemberDirectory\Controllers\PostTypes\MemberPostType;
 use MemberDirectory\Controllers\PostTypes\TeamPostType;
 use MemberDirectory\MetaBoxes\MemberMetaBox;
+use MemberDirectory\MetaBoxes\TeamMetaBox;
 use MemberDirectory\Admin\AdminAssets;
 
 class Plugin {
@@ -16,6 +17,7 @@ class Plugin {
 
         // Register Metaboxes
         (new MemberMetaBox())->register();
+        (new TeamMetaBox())->register();
 
         // Register Assets
         (new AdminAssets())->register();
