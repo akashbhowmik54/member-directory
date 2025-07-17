@@ -10,4 +10,3 @@ class Plugin {
         // Future includes: CPTs, hooks, shortcodes, etc.
     }
 }
-error_log('hello');
