@@ -50,6 +50,26 @@ class MemberMetaBox implements MetaBoxInterface {
 
             echo "</p>";
         }
+
+        $selected_teams = get_post_meta($post->ID, '_member_teams', true);
+        $selected_teams = is_array($selected_teams) ? $selected_teams : [];
+
+        $teams = get_posts([
+            'post_type' => 'team',
+            'numberposts' => -1,
+            'post_status' => 'publish',
+        ]);
+
+        echo '<p><strong>Teams:</strong></p>';
+        echo '<div style="margin-left:10px;">';
+        foreach ($teams as $team) {
+            $checked = in_array($team->ID, $selected_teams) ? 'checked' : '';
+            echo "<label style='display:block; margin-bottom:4px;'>
+                    <input type='checkbox' name='member_teams[]' value='{$team->ID}' $checked />
+                    {$team->post_title}
+                </label>";
+        }
+        echo '</div>';
     }
 
     public function save_meta_boxes($post_id): void {
@@ -78,5 +98,13 @@ class MemberMetaBox implements MetaBoxInterface {
         }
 
         remove_action('save_post_member', [$this, 'save_meta_boxes']);
+
+        if (isset($_POST['member_teams'])) {
+            $team_ids = array_map('intval', $_POST['member_teams']);
+            update_post_meta($post_id, '_member_teams', $team_ids);
+        } else {
+            delete_post_meta($post_id, '_member_teams');
+        }
+
     }
 }
