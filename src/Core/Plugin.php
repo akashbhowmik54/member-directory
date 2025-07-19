@@ -8,6 +8,7 @@ use MemberDirectory\MetaBoxes\TeamMetaBox;
 use MemberDirectory\Admin\AdminAssets;
 use MemberDirectory\Core\Hooks;
 use MemberDirectory\Admin\MemberAdminColumns;
+use MemberDirectory\Handlers\ContactFormHandler;
 
 class Plugin {
     public static function init(): void {
@@ -28,6 +29,9 @@ class Plugin {
         (new Hooks())->register();
 
         (new MemberAdminColumns())->register();
+        
+        ContactFormHandler::init();
+
     }
 
     private static function load_dependencies(): void {

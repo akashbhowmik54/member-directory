@@ -73,24 +73,33 @@ class MemberMetaBox implements MetaBoxInterface {
         }
         echo '</div>';
 
-        // Display Submissions
         $submissions = get_post_meta($post->ID, '_member_submissions', true);
+
         if (!empty($submissions) && is_array($submissions)) {
             echo '<h2>Form Submissions</h2>';
             echo '<table style="width:100%; border-collapse: collapse;" border="1">';
-            echo '<thead><tr><th>Name</th><th>Email</th><th>Message</th><th>Date</th></tr></thead><tbody>';
-            foreach ($submissions as $submission) {
+            echo '<thead><tr><th>Name</th><th>Email</th><th>Message</th><th>Date</th><th>Action</th></tr></thead><tbody>';
+
+            foreach ($submissions as $index => $submission) {
                 echo '<tr>';
                 echo '<td>' . esc_html($submission['name'] ?? '') . '</td>';
                 echo '<td>' . esc_html($submission['email'] ?? '') . '</td>';
                 echo '<td>' . esc_html($submission['message'] ?? '') . '</td>';
                 echo '<td>' . esc_html($submission['date'] ?? '') . '</td>';
+                echo '<td>';
+                echo '<form method="post" style="display:inline;">';
+                echo '<input type="hidden" name="delete_submission_index" value="' . esc_attr($index) . '">';
+                echo '<input type="submit" name="delete_submission" value="Delete" onclick="return confirm(\'Are you sure you want to delete this submission?\')">';
+                echo '</form>';
+                echo '</td>';
                 echo '</tr>';
             }
+
             echo '</tbody></table>';
         } else {
             echo '<p><strong>No submissions yet.</strong></p>';
         }
+
     }
 
     public function save_meta_boxes($post_id): void {
@@ -173,5 +182,15 @@ class MemberMetaBox implements MetaBoxInterface {
             delete_post_meta($post_id, '_member_teams');
         }
 
+        if (isset($_POST['delete_submission']) && isset($_POST['delete_submission_index'])) {
+            $submissions = get_post_meta($post_id, '_member_submissions', true);
+            $index = intval($_POST['delete_submission_index']);
+
+            if (isset($submissions[$index])) {
+                unset($submissions[$index]);
+                $submissions = array_values($submissions); 
+                update_post_meta($post_id, '_member_submissions', $submissions);
+            }
+        }
     }
 }
