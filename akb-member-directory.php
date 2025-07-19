@@ -19,8 +19,16 @@ define( 'AKB_MEMBER_DIRECTORY_PATH', plugin_dir_path( __FILE__ ) );
 require_once __DIR__ . '/vendor/autoload.php';
 
 use MemberDirectory\Core\Plugin;
+use MemberDirectory\Core\Router;
+use MemberDirectory\Core\Activator;
+use MemberDirectory\Core\Deactivator;
+
+// Activation/Deactivation
+register_activation_hook(__FILE__, [Activator::class, 'activate']);
+register_deactivation_hook(__FILE__, [Deactivator::class, 'deactivate']);
 
 function member_directory_init() {
     Plugin::init();
+    (new Router())->register();
 }
 add_action( 'plugins_loaded', 'member_directory_init' );
