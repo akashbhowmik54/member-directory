@@ -7,6 +7,7 @@ use MemberDirectory\MetaBoxes\MemberMetaBox;
 use MemberDirectory\MetaBoxes\TeamMetaBox;
 use MemberDirectory\Admin\AdminAssets;
 use MemberDirectory\Core\Hooks;
+use MemberDirectory\Admin\MemberAdminColumns;
 
 class Plugin {
     public static function init(): void {
@@ -25,6 +26,8 @@ class Plugin {
 
         // Register Hooks
         (new Hooks())->register();
+
+        (new MemberAdminColumns())->register();
     }
 
     private static function load_dependencies(): void {

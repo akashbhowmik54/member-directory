@@ -72,6 +72,25 @@ class MemberMetaBox implements MetaBoxInterface {
                 </label>";
         }
         echo '</div>';
+
+        // Display Submissions
+        $submissions = get_post_meta($post->ID, '_member_submissions', true);
+        if (!empty($submissions) && is_array($submissions)) {
+            echo '<h2>Form Submissions</h2>';
+            echo '<table style="width:100%; border-collapse: collapse;" border="1">';
+            echo '<thead><tr><th>Name</th><th>Email</th><th>Message</th><th>Date</th></tr></thead><tbody>';
+            foreach ($submissions as $submission) {
+                echo '<tr>';
+                echo '<td>' . esc_html($submission['name'] ?? '') . '</td>';
+                echo '<td>' . esc_html($submission['email'] ?? '') . '</td>';
+                echo '<td>' . esc_html($submission['message'] ?? '') . '</td>';
+                echo '<td>' . esc_html($submission['date'] ?? '') . '</td>';
+                echo '</tr>';
+            }
+            echo '</tbody></table>';
+        } else {
+            echo '<p><strong>No submissions yet.</strong></p>';
+        }
     }
 
     public function save_meta_boxes($post_id): void {
