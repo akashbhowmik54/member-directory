@@ -44,6 +44,8 @@ class MemberMetaBox implements MetaBoxInterface {
                     <button type='button' class='button select-media' data-target='member_$key'>Select $label</button>
                     <div class='image-preview' id='preview_$key'>$preview</div>
                 ";
+            } elseif ($key === 'email') {
+                echo "<input type='email' class='widefat' name='member_$key' value='" . esc_attr($value) . "' />";
             } else {
                 echo "<input type='text' class='widefat' name='member_$key' value='" . esc_attr($value) . "' />";
             }
@@ -79,6 +81,52 @@ class MemberMetaBox implements MetaBoxInterface {
         }
 
         if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return;
+
+        if (!current_user_can('edit_post', $post_id)) {
+            return;
+        }
+
+        // Sanitize and validate email
+        $email = isset($_POST['member_email']) ? sanitize_email($_POST['member_email']) : '';
+
+        if (!empty($email)) {
+            if (!is_email($email)) {
+                set_transient("member_email_error_{$post_id}", 'Invalid email format. Please enter a valid email address.', 30);
+
+                wp_redirect(add_query_arg([
+                    'post'   => $post_id,
+                    'action' => 'edit',
+                ], admin_url('post.php')));
+                exit;
+            }
+
+            $duplicate = new \WP_Query([
+                'post_type'      => 'member',
+                'posts_per_page' => 1,
+                'post__not_in'   => [$post_id], 
+                'meta_query'     => [
+                    [
+                        'key'     => '_member_email',
+                        'value'   => $email,
+                        'compare' => '='
+                    ]
+                ]
+            ]);
+
+            if ($duplicate->have_posts()) {
+                set_transient("member_email_error_{$post_id}", 'Email already exists. Member not saved.', 30);
+
+                if (get_post_status($post_id) === 'auto-draft') {
+                    wp_delete_post($post_id, true);
+                }
+
+                wp_redirect(add_query_arg([
+                    'post'   => $post_id,
+                    'action' => 'edit',
+                ], admin_url('post.php')));
+                exit;
+            }
+        }
 
         $fields = ['first_name', 'last_name', 'email', 'address', 'profile_image', 'cover_image', 'favorite_color', 'status'];
 
