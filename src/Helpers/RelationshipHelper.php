@@ -17,7 +17,7 @@ class RelationshipHelper {
             'meta_query' => [
                 [
                     'key'     => '_member_teams',
-                    'value'   => '"' . $team_id . '"',
+                    'value'   => $team_id,
                     'compare' => 'LIKE',
                 ],
             ],
