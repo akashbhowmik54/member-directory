@@ -48,7 +48,9 @@
                         endwhile;
                         wp_reset_postdata();
                     else :
-                        echo '<li>No members assigned.</li>';
+                        ?>
+                        <li>No members assigned.</li>
+                    <?php
                     endif;
                     ?>
                 </ul>
@@ -58,7 +60,9 @@
         endwhile;
         wp_reset_postdata();
     else :
-        echo '<p>No teams found.</p>';
+        ?>
+        <p>No teams found.</p>
+    <?php
     endif;
     ?>
 </div>
