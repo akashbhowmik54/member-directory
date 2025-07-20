@@ -9,6 +9,7 @@ use MemberDirectory\Admin\AdminAssets;
 use MemberDirectory\Core\Hooks;
 use MemberDirectory\Admin\MemberAdminColumns;
 use MemberDirectory\Handlers\ContactFormHandler;
+use MemberDirectory\Frontend\FrontendAssets;
 
 class Plugin {
     public static function init(): void {
@@ -24,12 +25,13 @@ class Plugin {
 
         // Register Assets
         (new AdminAssets())->register();
+        (new FrontendAssets())->register();
 
         // Register Hooks
         (new Hooks())->register();
 
         (new MemberAdminColumns())->register();
-        
+
         ContactFormHandler::init();
 
     }
