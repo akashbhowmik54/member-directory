@@ -78,7 +78,6 @@ get_header(); ?>
                 <script>
                     setTimeout(function () {
                         var msg = document.getElementById('contact-success-message');
-                        // if (msg) msg.style.display = 'none';
                         if (msg) {
                             msg.style.opacity = '0'; 
                             setTimeout(function () {
