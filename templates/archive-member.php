@@ -4,7 +4,7 @@
 get_header();
 
 echo '<div class="member-archive">';
-echo '<h1>All Active Members</h1>';
+echo '<h1>All Members</h1>';
 
 $args = array(
     'post_type'      => 'member',

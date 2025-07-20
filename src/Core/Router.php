@@ -66,7 +66,7 @@ class Router {
 
         if ($member) {
             // Use the correct path to your template
-            $template_path = AKB_MEMBER_DIRECTORY_PATH . 'templates/member-profile.php';
+            $template_path = AKB_MEMBER_DIRECTORY_PATH . 'templates/single-member.php';
             if (file_exists($template_path)) {
                 include $template_path;
                 exit;
