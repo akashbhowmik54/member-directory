@@ -18,6 +18,14 @@ class AdminAssets {
                 '1.0.0',
                 true
             );
+
+            wp_enqueue_style(
+                'admin-styles',
+                AKB_MEMBER_DIRECTORY_URL . 'assets/css/admin-style.css', 
+                [],
+                '1.0.0', 
+                'all' 
+            );
         }
     }
 }

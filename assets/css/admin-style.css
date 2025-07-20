@@ -1,0 +1,71 @@
+.submission-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 8px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.submission-table thead {
+    background-color: #007cba;
+    color: #fff;
+}
+
+.submission-table thead th {
+    padding: 12px 15px;
+    text-align: left;
+    font-weight: 600;
+}
+
+.submission-table tbody td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #eaeaea;
+    vertical-align: top;
+}
+
+.submission-table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.submission-form input[type="submit"] {
+    background-color: #d63638;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.submission-form input[type="submit"]:hover {
+    background-color: #a60000;
+}
+
+.submission-title {
+    font-size: 22px !important;
+    color: #23282d;
+    margin-top: 15px !important;
+    font-weight: 600 !important
+}
+
+
+.team-checkbox {
+    margin-left: 10px;
+}
+
+.team-checkbox label {
+    display:block; 
+    margin-bottom:4px;
+}
+
+.submission-table {
+    width: 100%; 
+    border-collapse: collapse;
+}
+
+.submission-form {
+    display: inline;
+}
