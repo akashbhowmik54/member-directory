@@ -24,15 +24,20 @@ get_header();
 ?>
 
 <div class="member-profile">
-    <?php if ($cover_image): ?>
+    <?php
+    // Convert attachment ID to image URL
+    $cover_image_url   = $cover_image ? wp_get_attachment_url((int) $cover_image) : '';
+    $profile_image_url = $profile_image ? wp_get_attachment_url((int) $profile_image) : '';
+    ?>
+    <?php if ($cover_image_url): ?>
         <div class="cover-image">
-            <img src="<?= esc_url($cover_image); ?>" alt="Cover Image">
+            <img src="<?= esc_url($cover_image_url); ?>" alt="Cover Image">
         </div>
     <?php endif; ?>
 
-    <?php if ($profile_image): ?>
+    <?php if ($profile_image_url): ?>
         <div class="profile-image">
-            <img src="<?= esc_url($profile_image); ?>" alt="Profile Image">
+            <img src="<?= esc_url($profile_image_url); ?>" alt="Profile Image">
         </div>
     <?php endif; ?>
 

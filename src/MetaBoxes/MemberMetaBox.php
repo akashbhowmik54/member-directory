@@ -38,9 +38,11 @@ class MemberMetaBox implements MetaBoxInterface {
                         <option value='draft' " . selected($selected, 'draft', false) . ">Draft</option>
                       </select>";
             } elseif ($key === 'profile_image' || $key === 'cover_image') {
-                $preview = $value ? "<img src='" . esc_url($value) . "' style='max-width:100px;display:block;margin-top:5px;' />" : '';
+                $attachment_id = intval($value);
+                $image_url = $attachment_id ? wp_get_attachment_url($attachment_id) : '';
+                $preview = $image_url ? "<img src='" . esc_url($image_url) . "' style='max-width:100px;display:block;margin-top:5px;' />" : '';
                 echo "
-                    <input type='hidden' id='member_$key' name='member_$key' value='" . esc_attr($value) . "' />
+                    <input type='hidden' id='member_$key' name='member_$key' value='" . esc_attr($attachment_id) . "' />
                     <button type='button' class='button select-media' data-target='member_$key'>Select $label</button>
                     <div class='image-preview' id='preview_$key'>$preview</div>
                 ";
@@ -160,7 +162,12 @@ class MemberMetaBox implements MetaBoxInterface {
 
         foreach ($fields as $field) {
             if (isset($_POST["member_$field"])) {
-                update_post_meta($post_id, "_member_$field", sanitize_text_field($_POST["member_$field"]));
+
+                if (in_array($field, ['profile_image', 'cover_image'])) {
+                    update_post_meta($post_id, "_member_$field", intval($_POST["member_$field"]));
+                } else {
+                    update_post_meta($post_id, "_member_$field", sanitize_text_field($_POST["member_$field"]));
+                }
             }
         }
 

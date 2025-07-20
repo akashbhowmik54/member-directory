@@ -15,11 +15,10 @@ jQuery(document).ready(function($) {
 
         frame.on('select', function() {
             const attachment = frame.state().get('selection').first().toJSON();
-            target.val(attachment.url);
+            target.val(attachment.id);
             preview.html(`<img src="${attachment.url}" style="max-width:100px; display:block; margin-top:5px;">`);
         });
 
         frame.open();
     });
 });
-console.log("JS loaded");
