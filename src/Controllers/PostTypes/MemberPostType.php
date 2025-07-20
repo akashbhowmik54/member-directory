@@ -25,10 +25,11 @@ class MemberPostType {
             'menu_position' => 20,
             'menu_icon' => 'dashicons-id',
             'rewrite' => ['slug' => 'members'],
-            'supports' => [],
+            'supports' => ['thumbnail', 'title'],
             'show_in_rest' => true,
         ];
 
         register_post_type('member', $args);
+        flush_rewrite_rules();
     }
 }

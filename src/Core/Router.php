@@ -12,22 +12,11 @@ class Router {
     public function add_rewrite_rules() {
 
         add_rewrite_rule(
-            '^member/?$',
-            'index.php?members_list=1',
-            'top'
-        );
-
-        add_rewrite_rule(
             '^team/?$',
             'index.php?teams_list=1',
             'top'
         );
 
-        add_rewrite_rule(
-            '^member/([^/]+)?',
-            'index.php?member_slug=$matches[1]',
-            'top'
-        );
     }
 
     public function add_query_vars($vars) {
@@ -47,7 +36,7 @@ class Router {
             } else {
                 wp_die('Members archive template not found');
             }
-        }
+       }
 
         if (get_query_var('teams_list')) {
             $template_path = AKB_MEMBER_DIRECTORY_PATH . 'templates/archive-team.php';
@@ -63,18 +52,12 @@ class Router {
         if (!$slug) return;
 
         $member = \MemberDirectory\Helpers\MemberHelper::get_member_by_slug($slug);
-
-        if ($member) {
-            // Use the correct path to your template
-            $template_path = AKB_MEMBER_DIRECTORY_PATH . 'templates/single-member.php';
-            if (file_exists($template_path)) {
-                include $template_path;
-                exit;
-            } else {
-                wp_die('Template file not found');
-            }
+        $template_path = AKB_MEMBER_DIRECTORY_PATH . 'templates/single-member.php';
+        if (file_exists($template_path)) {
+            include $template_path;
+            exit;
         } else {
-            wp_die('Member not found or inactive');
+            wp_die('Template file not found');
         }
     }
 }

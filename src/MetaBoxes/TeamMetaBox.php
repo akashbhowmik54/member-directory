@@ -50,9 +50,11 @@ class TeamMetaBox implements MetaBoxInterface {
         remove_action('save_post_team', [$this, 'save_meta_boxes']);
 
         if (!empty($_POST['team_team_name'])) {
+            $team_title = sanitize_text_field($_POST['team_team_name']);
             wp_update_post([
                 'ID' => $post_id,
-                'post_title' => sanitize_text_field($_POST['team_team_name']),
+                'post_title' => $team_title,
+                'post_name' => sanitize_title($team_title),
             ]);
         }
 

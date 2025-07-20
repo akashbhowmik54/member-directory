@@ -1,24 +1,24 @@
 <?php
-/** @var WP_Post $member */
+/** @var WP_Post $post */
 use MemberDirectory\Helpers\RelationshipHelper;
 
-$status = get_post_meta($member->ID, '_member_status', true);
+$status = get_post_meta($post->ID, '_member_status', true);
 if (strtolower($status) !== 'active') {
     echo '<p class="inactive-message">This member is not active.</p>';
     return;
 }
 
-$first_name    = get_post_meta($member->ID, '_member_first_name', true);
-$last_name     = get_post_meta($member->ID, '_member_last_name', true);
+$first_name    = get_post_meta($post->ID, '_member_first_name', true);
+$last_name     = get_post_meta($post->ID, '_member_last_name', true);
 $full_name     = trim("$first_name $last_name");
 
-$email         = get_post_meta($member->ID, '_member_email', true);
-$address       = get_post_meta($member->ID, '_member_address', true);
-$fav_color     = get_post_meta($member->ID, '_member_favorite_color', true);
-$profile_image = get_post_meta($member->ID, '_member_profile_image', true);
-$cover_image   = get_post_meta($member->ID, '_member_cover_image', true);
+$email         = get_post_meta($post->ID, '_member_email', true);
+$address       = get_post_meta($post->ID, '_member_address', true);
+$fav_color     = get_post_meta($post->ID, '_member_favorite_color', true);
+$profile_image = get_post_meta($post->ID, '_member_profile_image', true);
+$cover_image   = get_post_meta($post->ID, '_member_cover_image', true);
 
-$teams = RelationshipHelper::get_teams_for_member($member->ID);
+$teams = RelationshipHelper::get_teams_for_member($post->ID);
 
 $cover_image_url   = $cover_image ? wp_get_attachment_url((int) $cover_image) : '';
 $profile_image_url = $profile_image ? wp_get_attachment_url((int) $profile_image) : '';
@@ -93,7 +93,7 @@ get_header(); ?>
             <?php endif; ?>
 
             <form method="post" action="">
-                <input type="hidden" name="contact_member_id" value="<?= esc_attr($member->ID); ?>" />
+                <input type="hidden" name="contact_member_id" value="<?= esc_attr($post->ID); ?>" />
                 <div class="form-group">
                     <label>Your Name:</label>
                     <input type="text" name="sender_name" required />

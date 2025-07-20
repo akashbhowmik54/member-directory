@@ -4,7 +4,7 @@ get_header();
 ?>
 
 <div class="member-archive">
-    <h1>All Members</h1>
+    <h1>All Members Page</h1>
 
     <?php
     $args = array(
@@ -44,6 +44,7 @@ get_header();
                 $team_list = !empty($team_names) ? implode(', ', $team_names) : '—';
             ?>
                 <div class="member-card">
+                    <a href="<?php the_permalink(); ?>">
                     <?php
                     if ($profile_img) {
                         $img_url = wp_get_attachment_url((int) $profile_img);
@@ -56,9 +57,10 @@ get_header();
                         echo '<div class="profile-img"></div>';
                     }
                     ?>
+                    </a>
                     <div class="card-body">
                         <div class="member-name">
-                            <h6><?php echo esc_html($full_name); ?></h6>
+                            <h6><a href="<?php the_permalink(); ?>"><?php echo esc_html($full_name); ?></a></h6>
                         </div>
                         <div class="member-email">
                             <?php echo esc_html($email); ?>

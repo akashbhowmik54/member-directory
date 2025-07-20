@@ -173,14 +173,19 @@ class MemberMetaBox implements MetaBoxInterface {
 
         remove_action('save_post_member', [$this, 'save_meta_boxes']);
 
-        if (!empty($_POST['member_first_name'])) {
+        $first_name = sanitize_text_field($_POST['member_first_name']);
+        $last_name = sanitize_text_field($_POST['member_last_name']);
+
+        if (!empty($first_name) || !empty($last_name)) {
+            $title = trim("$first_name $last_name");
             wp_update_post([
                 'ID' => $post_id,
-                'post_title' => sanitize_text_field($_POST['member_first_name']),
+                'post_title' => $title,
+                'post_name' => sanitize_title($title)
             ]);
         }
 
-        remove_action('save_post_member', [$this, 'save_meta_boxes']);
+        add_action('save_post_member', [$this, 'save_meta_boxes']);
 
         if (isset($_POST['member_teams'])) {
             $team_ids = array_map('intval', $_POST['member_teams']);
