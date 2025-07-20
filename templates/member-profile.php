@@ -58,6 +58,24 @@ get_header();
 
     <h3>Contact This Member</h3>
     
+    <?php if (isset($_GET['submitted']) && $_GET['submitted'] === 'true') : ?>
+        <div id="contact-success-message" class="contact-success-message" style="padding: 12px; background: #e1f7e7; color: #2d6a4f; margin-bottom: 20px;">
+            <span>Your message has been sent successfully!</span>
+        </div>
+        <script>
+            setTimeout(function () {
+                var msg = document.getElementById('contact-success-message');
+                if (msg) {
+                    msg.style.display = 'none';
+                }
+
+                const url = new URL(window.location);
+                url.searchParams.delete('submitted');
+                window.history.replaceState({}, document.title, url);
+            }, 5000);
+        </script>
+    <?php endif; ?>
+
     <form method="post" action="">
         <input type="hidden" name="contact_member_id" value="<?= esc_attr($member->ID); ?>" />
         <p>
