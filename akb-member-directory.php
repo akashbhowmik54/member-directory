@@ -30,5 +30,16 @@ register_deactivation_hook(__FILE__, [Deactivator::class, 'deactivate']);
 function member_directory_init() {
     Plugin::init();
     (new Router())->register();
+
+    // Flush rewrite rules on activation
+    if (get_option('member_directory_flush_rewrite_rules_flag')) {
+        flush_rewrite_rules();
+        delete_option('member_directory_flush_rewrite_rules_flag');
+    }
 }
 add_action( 'plugins_loaded', 'member_directory_init' );
+
+// Set the flag on activation
+register_activation_hook(__FILE__, function() {
+    add_option('member_directory_flush_rewrite_rules_flag', true);
+});

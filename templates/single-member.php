@@ -26,6 +26,9 @@ $profile_image_url = $profile_image ? wp_get_attachment_url((int) $profile_image
 get_header(); ?>
 
 <div class="member-profile-container">
+    <h2>Hello from single
+        
+    </h2>
     <?php if ($cover_image_url): ?>
         <div class="member-cover">
             <img src="<?= esc_url($cover_image_url); ?>" alt="Cover Image">

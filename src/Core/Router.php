@@ -52,12 +52,26 @@ class Router {
         if (!$slug) return;
 
         $member = \MemberDirectory\Helpers\MemberHelper::get_member_by_slug($slug);
-        $template_path = AKB_MEMBER_DIRECTORY_PATH . 'templates/single-member.php';
-        if (file_exists($template_path)) {
-            include $template_path;
-            exit;
+           $template_path = AKB_MEMBER_DIRECTORY_PATH . 'templates/single-member.php';
+            if (file_exists($template_path)) {
+                include $template_path;
+                exit;
+            } else {
+                wp_die('Template file not found');
+            }
+
+
+        if ($member) {
+            // Use the correct path to your template
+            $template_path = AKB_MEMBER_DIRECTORY_PATH . 'templates/single-member.php';
+            if (file_exists($template_path)) {
+                include $template_path;
+                exit;
+            } else {
+                wp_die('Template file not found');
+            }
         } else {
-            wp_die('Template file not found');
+            wp_die('Member not found or inactive');
         }
     }
 }
