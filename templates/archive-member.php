@@ -1,5 +1,5 @@
 <?php
-// akb-member-directory/templates/archive-member.php
+
 get_header();
 ?>
 
@@ -34,7 +34,6 @@ get_header();
 
                 $full_name = trim("$first_name $last_name");
 
-                // Get team names
                 $team_names = [];
                 if (!empty($team_ids) && is_array($team_ids)) {
                     foreach ($team_ids as $team_id) {

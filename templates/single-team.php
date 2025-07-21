@@ -6,7 +6,6 @@ if (have_posts()) :
 
         $team_id = get_the_ID();
 
-        // Get Team Meta Fields
         $team_name = get_post_meta($team_id, '_team_team_name', true);
         $short_description = get_post_meta($team_id, '_team_short_description', true);
         ?>
@@ -16,7 +15,6 @@ if (have_posts()) :
             <p><?php echo esc_html($short_description); ?></p>
 
             <?php
-            // Query members linked to this team (no quotes around $team_id)
             $members = new WP_Query([
                 'post_type'      => 'member',
                 'posts_per_page' => -1,

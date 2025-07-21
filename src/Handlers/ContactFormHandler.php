@@ -41,9 +41,6 @@ class ContactFormHandler {
                 ['Reply-To: ' . $sender_email]
             );
 
-            // add_action('wp_footer', function () {
-            //     echo "<script>alert('Your message has been sent!');</script>";
-            // });
             if ($sent) {
                 wp_safe_redirect(add_query_arg('submitted', 'true', wp_get_referer()));
                 exit;
