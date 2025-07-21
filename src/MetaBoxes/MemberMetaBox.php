@@ -65,10 +65,10 @@ class MemberMetaBox implements MetaBoxInterface {
         ]);
 
         echo '<p><strong>Teams:</strong></p>';
-        echo '<div style="margin-left:10px;">';
+        echo '<div class="team-checkbox">';
         foreach ($teams as $team) {
             $checked = in_array($team->ID, $selected_teams) ? 'checked' : '';
-            echo "<label style='display:block; margin-bottom:4px;'>
+            echo "<label>
                     <input type='checkbox' name='member_teams[]' value='{$team->ID}' $checked />
                     {$team->post_title}
                 </label>";
@@ -77,30 +77,38 @@ class MemberMetaBox implements MetaBoxInterface {
 
         $submissions = get_post_meta($post->ID, '_member_submissions', true);
 
-        if (!empty($submissions) && is_array($submissions)) {
-            echo '<h2>Form Submissions</h2>';
-            echo '<table style="width:100%; border-collapse: collapse;" border="1">';
-            echo '<thead><tr><th>Name</th><th>Email</th><th>Message</th><th>Date</th><th>Action</th></tr></thead><tbody>';
-
-            foreach ($submissions as $index => $submission) {
-                echo '<tr>';
-                echo '<td>' . esc_html($submission['name'] ?? '') . '</td>';
-                echo '<td>' . esc_html($submission['email'] ?? '') . '</td>';
-                echo '<td>' . esc_html($submission['message'] ?? '') . '</td>';
-                echo '<td>' . esc_html($submission['date'] ?? '') . '</td>';
-                echo '<td>';
-                echo '<form method="post" style="display:inline;">';
-                echo '<input type="hidden" name="delete_submission_index" value="' . esc_attr($index) . '">';
-                echo '<input type="submit" name="delete_submission" value="Delete" onclick="return confirm(\'Are you sure you want to delete this submission?\')">';
-                echo '</form>';
-                echo '</td>';
-                echo '</tr>';
-            }
-
-            echo '</tbody></table>';
-        } else {
-            echo '<p><strong>No submissions yet.</strong></p>';
-        }
+        if (!empty($submissions) && is_array($submissions)) : ?>
+            <h2 class="submission-title">Form Submissions</h2>
+            <table class="submission-table" border="1">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Message</th>
+                        <th>Date</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($submissions as $index => $submission) : ?>
+                        <tr>
+                            <td><?php echo esc_html($submission['name'] ?? ''); ?></td>
+                            <td><?php echo esc_html($submission['email'] ?? ''); ?></td>
+                            <td><?php echo esc_html($submission['message'] ?? ''); ?></td>
+                            <td><?php echo esc_html($submission['date'] ?? ''); ?></td>
+                            <td>
+                                <form method="post" class="submission-form">
+                                    <input type="hidden" name="delete_submission_index" value="<?php echo esc_attr($index); ?>">
+                                    <input type="submit" name="delete_submission" value="Delete" onclick="return confirm('Are you sure you want to delete this submission?')">
+                                </form>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        <?php else : ?>
+            <p><strong>No submissions yet.</strong></p>
+        <?php endif; 
 
     }
 
@@ -178,10 +186,11 @@ class MemberMetaBox implements MetaBoxInterface {
 
         if (!empty($first_name) || !empty($last_name)) {
             $title = trim("$first_name $last_name");
+            $slug = sanitize_title("{$first_name}_{$last_name}"); 
             wp_update_post([
                 'ID' => $post_id,
                 'post_title' => $title,
-                'post_name' => sanitize_title($title)
+                'post_name' => $slug  
             ]);
         }
 

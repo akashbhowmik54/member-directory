@@ -16,6 +16,14 @@ class FrontendAssets {
         );
 
         wp_enqueue_style(
+            'single-team-style',
+            AKB_MEMBER_DIRECTORY_URL . 'assets/css/single-team.css',
+            [],
+            '1.0',
+            'all'
+        );
+
+        wp_enqueue_style(
             'archive-member-style',
             AKB_MEMBER_DIRECTORY_URL . 'assets/css/archive-member.css',
             [],

@@ -47,7 +47,7 @@
                                     $last_name  = get_post_meta(get_the_ID(), '_member_last_name', true);
                                     $full_name = trim("$first_name $last_name");
                                     ?>
-                                    <li class="member-name"><?php echo esc_html($full_name); ?></li>
+                                    <li class="member-name"><a href="<?php the_permalink(); ?>"><?php echo esc_html($full_name); ?></a></li>
                                 <?php
                                 endwhile;
                                 wp_reset_postdata();
