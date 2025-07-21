@@ -51,13 +51,14 @@
     text-align: center;
 }
 
-.member-name a {
+.single-member-name a {
     color: #333;
     text-decoration: none;
     display: block;
+    font-size: 18px;
 }
 
-.member-name a:hover {
+.single-member-name a:hover {
     color: #4CAF50;
     transform: scale(1.05);
 }
