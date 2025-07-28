@@ -30,7 +30,7 @@
     background-color: #f9f9f9;
 }
 
-.submission-form input[type="submit"] {
+.submission-table input[type="submit"] {
     background-color: #d63638;
     color: white;
     border: none;
@@ -40,7 +40,7 @@
     transition: background-color 0.2s ease;
 }
 
-.submission-form input[type="submit"]:hover {
+.submission-table input[type="submit"]:hover {
     background-color: #a60000;
 }
 

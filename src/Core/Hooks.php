@@ -6,23 +6,6 @@ class Hooks {
     public function register(): void {
         add_action('admin_init', [$this, 'removeDefaultEditorAndTitle']);
         add_action('admin_notices', [$this, 'displayEmailErrorNotice']);
-        add_filter('template_include', [$this, 'include_template']);
-
-    }
-
-    public function include_template($template) {
-        if (is_singular('member')) {
-            $new_template = AKB_MEMBER_DIRECTORY_PATH . 'templates/single-member.php';
-            if (file_exists($new_template)) {
-                return $new_template;
-            }
-        } elseif (is_post_type_archive('member')) {
-            $new_template = AKB_MEMBER_DIRECTORY_PATH . 'templates/archive-member.php';
-            if (file_exists($new_template)) {
-                return $new_template;
-            }
-        }
-        return $template;
     }
 
     public function removeDefaultEditorAndTitle(): void {

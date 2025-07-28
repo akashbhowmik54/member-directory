@@ -30,6 +30,5 @@ class MemberPostType {
         ];
 
         register_post_type('member', $args);
-        flush_rewrite_rules();
     }
 }
