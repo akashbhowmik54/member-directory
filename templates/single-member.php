@@ -70,29 +70,10 @@ get_header(); ?>
 
         <div class="contact-member">
             <h3>Contact This Member</h3>
-
-            <?php if (isset($_GET['submitted']) && $_GET['submitted'] === 'true') : ?>
-                <div id="contact-success-message" class="contact-success-message">
-                    <span>Your message has been sent successfully!</span>
-                </div>
-                <script>
-                    setTimeout(function () {
-                        var msg = document.getElementById('contact-success-message');
-                        if (msg) {
-                            msg.style.opacity = '0'; 
-                            setTimeout(function () {
-                                msg.style.display = 'none'; 
-                            }, 500); 
-                        }
-
-                        const url = new URL(window.location);
-                        url.searchParams.delete('submitted');
-                        window.history.replaceState({}, document.title, url);
-                    }, 5000);
-                </script>
-            <?php endif; ?>
-
-            <form method="post" action="">
+            <div id="contact-success-message" class="contact-success-message">
+                <span>Your message has been sent successfully!</span>
+            </div>
+            <form id="member-contact-form">
                 <input type="hidden" name="contact_member_id" value="<?= esc_attr($post->ID); ?>" />
                 <div class="form-group">
                     <label>Your Name:</label>
@@ -110,6 +91,57 @@ get_header(); ?>
                     <button type="submit" name="submit_contact">Send</button>
                 </div>
             </form>
+            <script>
+                document.getElementById('member-contact-form').addEventListener('submit', async function(e) {
+                    e.preventDefault();
+
+                    const form = e.target;
+
+                    const data = {
+                        contact_member_id: form.contact_member_id.value,
+                        sender_name: form.sender_name.value,
+                        sender_email: form.sender_email.value,
+                        sender_message: form.sender_message.value
+                    };
+
+                    try {
+                        const response = await fetch('<?php echo esc_url(rest_url("member-directory/v1/contact")); ?>', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(data)
+                        });
+
+                        const result = await response.json();
+                        const messageBox = document.getElementById('form-message');
+                        const successMessage = document.getElementById('contact-success-message');
+
+                        if (result.success) {
+                            form.reset();
+
+                            successMessage.style.display = 'block';
+                            successMessage.style.opacity = '1';
+
+                            setTimeout(() => {
+                                successMessage.style.opacity = '0';
+                                setTimeout(() => {
+                                    successMessage.style.display = 'none';
+                                }, 500);
+                            }, 5000);
+
+                            messageBox.textContent = '';
+                        } else {
+                            messageBox.textContent = result.message || 'Something went wrong.';
+                            messageBox.style.color = 'red';
+                        }
+                    } catch (error) {
+                        document.getElementById('form-message').textContent = 'Error sending request.';
+                        console.error('Error:', error);
+                    }
+                });
+
+            </script>
         </div>
     </div>
 </div>
