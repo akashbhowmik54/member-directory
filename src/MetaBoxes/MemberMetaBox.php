@@ -97,9 +97,12 @@ class MemberMetaBox implements MetaBoxInterface {
                             <td><?php echo esc_html($submission['message'] ?? ''); ?></td>
                             <td><?php echo esc_html($submission['date'] ?? ''); ?></td>
                             <td>
-                                <form method="post" class="submission-form">
+                                <form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>">
+                                    <?php wp_nonce_field('delete_member_submission', 'delete_member_submission_nonce'); ?>
+                                    <input type="hidden" name="action" value="delete_member_submission">
+                                    <input type="hidden" name="post_id" value="<?php echo esc_attr($post->ID); ?>">
                                     <input type="hidden" name="delete_submission_index" value="<?php echo esc_attr($index); ?>">
-                                    <input type="submit" name="delete_submission" value="Delete" onclick="return confirm('Are you sure you want to delete this submission?')">
+                                    <input type="submit" class="button button-secondary" value="Delete" onclick="return confirm('Are you sure you want to delete this submission?')">
                                 </form>
                             </td>
                         </tr>
